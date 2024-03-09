@@ -1,3 +1,4 @@
+// go get internal/tool
 package main
 
 import (
