@@ -5,39 +5,39 @@ package main
 import (
 	"embed"
 	"github.com/abakum/embed-encrypt/encryptedfs"
-	"internal/tool"
+	"public/tool"
 )
 
 var key []byte
 
 func init() {
-	key = tool.Priv()
+	key = tool.Priv("key", "tool")
 }
 
 //go:embed "hello.txt.enc"
-var enc1 string
+var helloEnc string
 
 func init() {
-	hello = encryptedfs.DecString(enc1, key)
+	hello = encryptedfs.DecString(helloEnc, key)
 }
 
-//go:embed "gopher.png.enc"
-var enc2 []byte
+//go:embed "image/gopher.png.enc"
+var gopherEnc []byte
 
 func init() {
-	gopher = encryptedfs.DecByte(enc2, key)
+	gopher = encryptedfs.DecByte(gopherEnc, key)
 }
 
-//go:embed "hello.txt.enc" "another.txt.enc" "with spaces .txt.enc"
-var enc3 embed.FS
+//go:embed "hello.txt.enc" "another.txt.enc" "with spaces .txt.enc" "image/gopher.png.enc"
+var multiplefilesEnc embed.FS
 
 func init() {
-	multiplefiles = encryptedfs.InitFS(enc3, key)
+	multiplefiles = encryptedfs.InitFS(multiplefilesEnc, key)
 }
 
-//go:embed "another.txt.enc" "hello.txt.enc" "with spaces .txt.enc"
-var enc4 embed.FS
+//go:embed "image/gopher.png.enc" "another.txt.enc" "hello.txt.enc" "with spaces .txt.enc"
+var globEnc embed.FS
 
 func init() {
-	glob = encryptedfs.InitFS(enc4, key)
+	glob = encryptedfs.InitFS(globEnc, key)
 }
